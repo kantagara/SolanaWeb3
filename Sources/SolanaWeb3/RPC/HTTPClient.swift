@@ -68,7 +68,7 @@ public class HTTPClient {
         var request = URLRequest(url: healthURL)
         request.httpMethod = "GET"
         
-        let (data, response) = try await session.data(for: request)
+        let (_, response) = try await session.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw RPCError.invalidResponse

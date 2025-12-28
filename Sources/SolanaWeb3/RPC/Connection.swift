@@ -55,12 +55,16 @@ public class Connection {
     ) async throws -> BlockhashWithExpiryBlockHeight {
         var params: [AnyCodable] = []
         
-        var configDict: [String: AnyCodable] = [:]
+        // IMPORTANT:
+        // Use `[String: Any]` (not `[String: AnyCodable]`) because `AnyCodable` can encode
+        // dictionaries of type `[String: Any]`, but not `[String: AnyCodable]` due to Swift
+        // invariance (which leads to `AnyEncodable value cannot be encoded` errors).
+        var configDict: [String: Any] = [:]
         if let commitment = config?.commitment ?? self.commitment {
-            configDict["commitment"] = AnyCodable(commitment.rawValue)
+            configDict["commitment"] = commitment.rawValue
         }
         if let minContextSlot = config?.minContextSlot {
-            configDict["minContextSlot"] = AnyCodable(minContextSlot)
+            configDict["minContextSlot"] = minContextSlot
         }
         if !configDict.isEmpty {
             params.append(AnyCodable(configDict))
@@ -86,12 +90,12 @@ public class Connection {
     ) async throws -> UInt64 {
         var params: [AnyCodable] = [AnyCodable(pubkey.toBase58())]
         
-        var configDict: [String: AnyCodable] = [:]
+        var configDict: [String: Any] = [:]
         if let commitment = config?.commitment ?? self.commitment {
-            configDict["commitment"] = AnyCodable(commitment.rawValue)
+            configDict["commitment"] = commitment.rawValue
         }
         if let minContextSlot = config?.minContextSlot {
-            configDict["minContextSlot"] = AnyCodable(minContextSlot)
+            configDict["minContextSlot"] = minContextSlot
         }
         if !configDict.isEmpty {
             params.append(AnyCodable(configDict))
@@ -117,23 +121,23 @@ public class Connection {
     ) async throws -> AccountInfo? {
         var params: [AnyCodable] = [AnyCodable(pubkey.toBase58())]
         
-        var configDict: [String: AnyCodable] = [:]
+        var configDict: [String: Any] = [:]
         if let commitment = config?.commitment ?? self.commitment {
-            configDict["commitment"] = AnyCodable(commitment.rawValue)
+            configDict["commitment"] = commitment.rawValue
         }
         if let encoding = config?.encoding {
-            configDict["encoding"] = AnyCodable(encoding.rawValue)
+            configDict["encoding"] = encoding.rawValue
         } else {
-            configDict["encoding"] = AnyCodable("base64")
+            configDict["encoding"] = "base64"
         }
         if let dataSlice = config?.dataSlice {
-            var sliceDict: [String: AnyCodable] = [:]
-            sliceDict["offset"] = AnyCodable(dataSlice.offset)
-            sliceDict["length"] = AnyCodable(dataSlice.length)
-            configDict["dataSlice"] = AnyCodable(sliceDict)
+            var sliceDict: [String: Any] = [:]
+            sliceDict["offset"] = dataSlice.offset
+            sliceDict["length"] = dataSlice.length
+            configDict["dataSlice"] = sliceDict
         }
         if let minContextSlot = config?.minContextSlot {
-            configDict["minContextSlot"] = AnyCodable(minContextSlot)
+            configDict["minContextSlot"] = minContextSlot
         }
         if !configDict.isEmpty {
             params.append(AnyCodable(configDict))
@@ -154,12 +158,12 @@ public class Connection {
     ) async throws -> UInt64 {
         var params: [AnyCodable] = []
         
-        var configDict: [String: AnyCodable] = [:]
+        var configDict: [String: Any] = [:]
         if let commitment = config?.commitment ?? self.commitment {
-            configDict["commitment"] = AnyCodable(commitment.rawValue)
+            configDict["commitment"] = commitment.rawValue
         }
         if let minContextSlot = config?.minContextSlot {
-            configDict["minContextSlot"] = AnyCodable(minContextSlot)
+            configDict["minContextSlot"] = minContextSlot
         }
         if !configDict.isEmpty {
             params.append(AnyCodable(configDict))
@@ -187,18 +191,18 @@ public class Connection {
         
         var params: [AnyCodable] = [AnyCodable(serializedTransaction)]
         
-        var configDict: [String: AnyCodable] = [:]
+        var configDict: [String: Any] = [:]
         if let skipPreflight = config?.skipPreflight {
-            configDict["skipPreflight"] = AnyCodable(skipPreflight)
+            configDict["skipPreflight"] = skipPreflight
         }
         if let preflightCommitment = config?.preflightCommitment {
-            configDict["preflightCommitment"] = AnyCodable(preflightCommitment.rawValue)
+            configDict["preflightCommitment"] = preflightCommitment.rawValue
         }
         if let maxRetries = config?.maxRetries {
-            configDict["maxRetries"] = AnyCodable(maxRetries)
+            configDict["maxRetries"] = maxRetries
         }
         if let minContextSlot = config?.minContextSlot {
-            configDict["minContextSlot"] = AnyCodable(minContextSlot)
+            configDict["minContextSlot"] = minContextSlot
         }
         if !configDict.isEmpty {
             params.append(AnyCodable(configDict))
@@ -222,7 +226,7 @@ public class Connection {
         _ pubkey: PublicKey,
         lamports: UInt64
     ) async throws -> TransactionSignature {
-        var params: [AnyCodable] = [
+        let params: [AnyCodable] = [
             AnyCodable(pubkey.toBase58()),
             AnyCodable(lamports)
         ]
