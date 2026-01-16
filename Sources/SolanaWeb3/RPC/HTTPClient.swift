@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AnyCodable
 
 /// HTTP JSON RPC Client
 public class HTTPClient {

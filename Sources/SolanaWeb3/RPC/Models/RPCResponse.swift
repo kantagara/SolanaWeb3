@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AnyCodable
 
 /// JSON RPC Response with context
 public struct RPCContextResponse<T: Codable>: Codable {

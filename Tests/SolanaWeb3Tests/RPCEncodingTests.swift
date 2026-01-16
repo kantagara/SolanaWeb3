@@ -1,5 +1,4 @@
 import XCTest
-import AnyCodable
 @testable import SolanaWeb3
 
 final class RPCEncodingTests: XCTestCase {
@@ -49,5 +48,6 @@ final class RPCEncodingTests: XCTestCase {
         XCTAssertNoThrow(try JSONEncoder().encode(request))
     }
 }
+
 
 

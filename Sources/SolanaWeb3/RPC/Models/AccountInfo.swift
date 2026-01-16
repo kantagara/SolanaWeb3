@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AnyCodable
 
 /// Account Information
 public struct AccountInfo: Codable, Equatable {

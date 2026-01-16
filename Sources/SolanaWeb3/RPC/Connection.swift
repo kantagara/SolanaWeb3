@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AnyCodable
 
 /// Connection to Solana JSON RPC API
 public class Connection {
