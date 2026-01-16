@@ -16,13 +16,11 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/metaplex-foundation/beet-swift", from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "SolanaWeb3",
             dependencies: [
-                .product(name: "Beet", package: "beet-swift"),
             ]
         ),
         .testTarget(
