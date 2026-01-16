@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import TweetNacl
 
 /// NaCl Low Level
 public struct NaClLowLevel {
