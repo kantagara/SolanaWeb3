@@ -25,7 +25,7 @@ public extension Program {
         bytes[3] = UInt8((index >> 24) & 0xFF)
         return bytes
     }
-    
+
     /// Creates a TransactionInstruction for the program instruction
     func createTransactionInstruction(
         instructionIndex: Int,
@@ -45,5 +45,6 @@ public extension Program {
             data: instructionData
         )
     }
+
 }
 

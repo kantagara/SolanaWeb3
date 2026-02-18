@@ -33,7 +33,25 @@ public struct TokenProgram: Program {
     private init(pubkey: PublicKey) {
         self.pubkey = pubkey
     }
-    
+
+    /// SPL Token Program uses u8 instruction index (shadows the u32 default from Program)
+    func createTransactionInstruction(
+        instructionIndex: Int,
+        keys: [AccountMeta],
+        data: [Data] = []
+    ) -> TransactionInstruction {
+        var instructionData = Data()
+        instructionData.append(Data([UInt8(instructionIndex & 0xFF)]))
+        for chunk in data {
+            instructionData.append(chunk)
+        }
+        return TransactionInstruction(
+            keys: keys,
+            programId: pubkey,
+            data: instructionData
+        )
+    }
+
     // MARK: - Initialize Mint
     
     /// Initializes a new mint and optionally deposits all the newly minted tokens in an account.

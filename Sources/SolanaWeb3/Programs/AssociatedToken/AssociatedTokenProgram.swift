@@ -27,7 +27,25 @@ public struct AssociatedTokenProgram: Program {
     private init(pubkey: PublicKey) {
         self.pubkey = pubkey
     }
-    
+
+    /// ATA Program uses u8 instruction index (shadows the u32 default from Program)
+    func createTransactionInstruction(
+        instructionIndex: Int,
+        keys: [AccountMeta],
+        data: [Data] = []
+    ) -> TransactionInstruction {
+        var instructionData = Data()
+        instructionData.append(Data([UInt8(instructionIndex & 0xFF)]))
+        for chunk in data {
+            instructionData.append(chunk)
+        }
+        return TransactionInstruction(
+            keys: keys,
+            programId: pubkey,
+            data: instructionData
+        )
+    }
+
     // MARK: - Create
     
     /// Creates an associated token account for the given wallet address and token mint.
