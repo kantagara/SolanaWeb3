@@ -2,8 +2,7 @@
 
 A Swift implementation of Solana Web3 SDK for basic Solana operations.
 
-This SDK provides core functionality for interacting with the Solana blockchain, including transaction serialization, keypair management, and RPC communication, it's not designed for signing & sending transactions (yet!), it's used as a necessity for Dynamic Swift SDK where we'll use it to encode the TX into base64 and then sign and send it trough the webview.
-
+This SDK provides core functionality for interacting with the Solana blockchain, including transaction serialization, keypair management, and RPC communication, it's not designed for signing & sending transactions by itself.
 
 ## Features
 
@@ -58,5 +57,4 @@ let base64 = transaction.serializeToBase64()
 
 ## License
 
-[Your License Here]
-
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
